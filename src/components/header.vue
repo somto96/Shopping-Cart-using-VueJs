@@ -14,7 +14,7 @@
                             <router-link class="nav-link" to="/">Home</router-link>
                             <router-link class="nav-link" to="/about">About</router-link>
                             <!-- <b-nav-item href="#">About</b-nav-item> -->
-                            <b-nav-item href="#">Cart</b-nav-item>
+                            <!-- <b-nav-item href="#">Cart</b-nav-item> -->
                             <b-button class="nav-btn" href="#" variant="primary">Log In</b-button>
                     </b-navbar-nav>
 

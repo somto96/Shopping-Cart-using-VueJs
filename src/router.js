@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Details from '@/components/details.vue'
 import Checkout from '@/components/checkout.vue'
-import addedToCart from '@/components/addedToCart.vue'
+import Cart from '@/components/cart.vue'
 import BootstrapVue from 'bootstrap-vue'
 
 Vue.use(Router)
@@ -17,19 +17,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/details/:id',
+      path: '/details',
       name: 'Details',
       component: Details
     },
     {
-      path: '/checkout/:id',
+      path: '/checkout',
       name: 'Checkout',
       component: Checkout
     },
     {
-      path: '/addedToCart/:id',
-      name: 'addedToCart',
-      component: addedToCart
+      path: '/Cart',
+      name: 'cart',
+      component: Cart
     },
     {
       path: '/about',

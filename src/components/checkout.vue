@@ -1,132 +1,126 @@
 <template>
-    <div>
-        <b-container fluid class="bv-example-row">
-       
-            <b-row>
-              <b-col md="6" offset-md="3">
-                <div v-for="(product,index) in cards" :key="index">
-                  <div v-if="id == product.id" >
-                    <b-card :title="product.title"
-                            :img-src="product.image"
-                            :img-alt="product.title"
-                            img-top
-                            tag="article"
-                            class="mb-2 text-center">
+  <div>
+    <b-container fluid class="bv-example-row">
+      <b-row>
+        <b-col md="6" offset-md="3">
+          <div>
+            <div class="top-deck">
+              <b-card
+                :title="currentProduct.title"
+                :img-src="currentProduct.image"
+                :img-alt="currentProduct.title"
+                img-left
+                class="mb-2 text-center product_card"
+              >
+                <b-row>
+                  <b-col md="6">
+                    <p class="price">Price(₦) : {{currentProduct.price * selection.qty}}</p>
+                  </b-col>
+                </b-row>
 
-                     <b-row>
-                        <b-col md="2" offset-md="2">
-                          <p class="price">Price : </p>
-                        </b-col> 
-                      </b-row>
+                <div class="row qty text-center">
+                  <b-col md="6">
+                    <p>Quantity : {{selection.qty}}</p>
+                  </b-col>
 
-                      <div class="row qty text-center">
-                        <b-col md='6'>
-                          <p>Quantity : </p>
-                        </b-col>
-
-                        <b-col md='6'>
-                          <b-button class="btn-remove" variant="outline-primary"> - </b-button>
-                          <b-button class="btn-checkout" variant="primary"> + </b-button>
-                        </b-col>
-                      </div>
-
-                      <b-row>
-                        <b-col md="6" offset="3">
-                          <b-button class="btn__add-to-cart" variant="outline-primary" @click="addToCart(id)">Add to cart</b-button>
-                        </b-col>
-                      </b-row>
-                    </b-card>
-                  </div>
+                  <b-col md="6">
+                    <b-button class="btn-remove" variant="outline-primary" @click="decrease()">-</b-button>
+                    <b-button class="btn-checkout" variant="primary" @click="increase()">+</b-button>
+                  </b-col>
                 </div>
-              </b-col>
-            </b-row>
-         
-        
-      </b-container>
-    </div>
+
+                <b-row>
+                  <b-col md="6" offset="3">
+                    <b-button
+                      class="btn__add-to-cart"
+                      variant="outline-primary"
+                      to="/Cart"
+                      @click="cart()"
+                    >Add to cart</b-button>
+                  </b-col>
+                </b-row>
+              </b-card>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: 'Checkout',
-    methods:{
-      addToCart(id){
-        this.$router.push({name: 'addedToCart', params: {id:id}})
+  name: "Checkout",
+
+  data() {
+    return {
+      selection: {
+        qty: 1
       }
+    };
+  },
+  methods: {
+    ...mapActions(["addProduct"]),
+    increase() {
+      this.selection.qty++;
+      // selection.price = currentProduct.price * selection.qty
+      // this.increaseQuantity()
     },
-    data(){
-        return{
-            id: this.$route.params.id,
-            cards: [
-                {
-                    id: 1,
-                    image: 'https://ng.jumia.is/7Gt9JvYcVgWWU-3aVDiSjwgbn8Y=/fit-in/680x680/filters:fill(white):sharpen(1,0,false):quality(100)/product/33/46488/1.jpg?2908',
-                    title: 'HP X1200 Flyer Red Wired Mouse',
-                    description: 'Simplicity made stylish. Simply plug in and experience smooth control using documents, creating art, reviewing the web and more - regardless if you are left or right-handed.'
-                },
 
-                {
-                    id: 2,
-                    image: 'https://ng.jumia.is/69ODqSLUq4_OnAXZBSlMAG-l2zI=/fit-in/680x680/filters:fill(white):sharpen(1,0,false):quality(100)/product/58/962452/1.jpg?5332',
-                    title: 'Mi Redmi 6',
-                    description: 
-                    `   
-                        Xiaomi Redmi 6 as a smartphone features 5.45 inch screen afford you a vivid and different visual experience.
-                    `
-                },
+    decrease() {
+      this.selection.qty--;
+      //selection.price = currentProduct.price * selection.qty
+      // this.decreaseQuantity()
+    },
 
-                {
-                    id: 3,
-                    image: 'https://picsum.photos/600/300/?image=24',
-                    title: 'Card-three',
-                    description: 'Some quick example text'
-                },
+    cart() {
+      this.addProduct(this.selection);
+    }
 
-                {
-                    id: 4,
-                    image: 'https://picsum.photos/600/300/?image=20',
-                    title: 'Card-four',
-                    description: 'Lorem Ipsum'
-                },
-
-                {
-                    id: 5,
-                    image: 'https://picsum.photos/600/300/?image=19',
-                    title: 'Card-five',
-                    description: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.'
-                },
-
-                {
-                    id: 6,
-                    image: 'https://ng.jumia.is/7goojkIHRsNVeG3snVmTc1yEm-I=/fit-in/680x680/filters:fill(white):sharpen(1,0,false):quality(100)/product/49/182581/1.jpg?5314',
-                    title: ` Generic 1 Luxury Glass Beads Door String Tassel Curtain Wedding Divider Panel Room Decor `,
-                    description: '1x Luxury Glass Beads Door String Tassel Curtain Wedding Divider Panel Room Decor （not include the pendant)'
-                },
-
-            ]
-        }
-     }
-
-}
+    // price(){
+    //   this.netPrice()
+    // },
+  },
+  computed: {
+    ...mapGetters({
+      currentProduct: "getCurrentProduct"
+    })
+  },
+  mounted() {
+    this.selection = {
+      ...this.selection,
+      ...this.currentProduct
+    };
+  }
+};
 </script>
 
 <style scoped>
-  .price{
-    text-align: left;
-  }
+.top-deck {
+  margin-top: 10% !important;
+}
+.price {
+  text-align: left;
+  margin-left: 36%;
+}
 
-  .btn-remove,
-  .btn-checkout{
-    border-radius: 50%;
-  }
+.product_card .card-img {
+  width: 50% !important;
+  margin-left: 25% !important;
+}
+.btn-remove,
+.btn-checkout {
+  border-radius: 50%;
+}
 
-  .btn-checkout{
-    margin-left: 20px;
-  }
-  
-  .btn-checkout,
-  .btn-remove{
-    line-height: 1.2;
-  }
+.btn-checkout {
+  margin-left: 20px;
+}
+
+.btn-checkout,
+.btn-remove {
+  line-height: 1.2;
+}
 </style>
